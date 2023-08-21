@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "147576229933",
-    "project_id": "fir-41e12",
-    "storage_bucket": "fir-41e12.appspot.com"
+    "project_number": "798367153525",
+    "project_id": "dashgram-984db",
+    "storage_bucket": "dashgram-984db.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:147576229933:android:b06cc98519f5305309e8a4",
+        "mobilesdk_app_id": "1:798367153525:android:739c9e46db6cbf5f92673c",
         "android_client_info": {
           "package_name": "com.example.dash"
         }
       },
       "oauth_client": [
         {
-          "client_id": "147576229933-ua4ogoj43tn4sttjq1pbuemrohsh2etc.apps.googleusercontent.com",
+          "client_id": "798367153525-0b1usb38368v2abppig0jl9psr1grsn2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD3F6ITmlj88zUzZzYA2l9OEZ8ghP9Dkks"
+          "current_key": "AIzaSyDcy1yDqyfbJT6xofdd0gfGykUOLACXpaE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "147576229933-ua4ogoj43tn4sttjq1pbuemrohsh2etc.apps.googleusercontent.com",
+              "client_id": "798367153525-0b1usb38368v2abppig0jl9psr1grsn2.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "147576229933-ngkllm2tsfhbh4hqj47j4edbdfusn4qh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.dash.RunnerTests"
-              }
             }
           ]
         }

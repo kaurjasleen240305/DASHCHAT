@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCfAldMo7Xl0_cmZi6ejblILg8MtY8hdw8',
-    appId: '1:147576229933:web:61ab2f2ce0babc1909e8a4',
-    messagingSenderId: '147576229933',
-    projectId: 'fir-41e12',
-    authDomain: 'fir-41e12.firebaseapp.com',
-    storageBucket: 'fir-41e12.appspot.com',
-    measurementId: 'G-BQ5QB9FX7Y',
+    apiKey: 'AIzaSyDA-AKFY67ZXAzR7kiIKK-UZJcIkR6-f0c',
+    appId: '1:205809805471:web:47d5fee13f86cfacfa1aaa',
+    messagingSenderId: '205809805471',
+    projectId: 'dashchat2',
+    authDomain: 'dashchat2.firebaseapp.com',
+    storageBucket: 'dashchat2.appspot.com',
+    measurementId: 'G-21YNPY9EDT',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD3F6ITmlj88zUzZzYA2l9OEZ8ghP9Dkks',
-    appId: '1:147576229933:android:b06cc98519f5305309e8a4',
-    messagingSenderId: '147576229933',
-    projectId: 'fir-41e12',
-    storageBucket: 'fir-41e12.appspot.com',
+    apiKey: 'AIzaSyB3N-wHjnNnR3N1Bc07zDB2QSwfa38f7Rg',
+    appId: '1:205809805471:android:64bee73f7d781cb2fa1aaa',
+    messagingSenderId: '205809805471',
+    projectId: 'dashchat2',
+    storageBucket: 'dashchat2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAxz7ZysYrC1D1a52PUb45FB3c-ojCXDTU',
-    appId: '1:147576229933:ios:41f5a1242a194be109e8a4',
-    messagingSenderId: '147576229933',
-    projectId: 'fir-41e12',
-    storageBucket: 'fir-41e12.appspot.com',
-    iosClientId: '147576229933-qglssan4b8tej9les2jfr8k0st319427.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAa-ypwICV1ZJp3RCiN5kP3Q-HxCN8QpX0',
+    appId: '1:205809805471:ios:448471d89f050780fa1aaa',
+    messagingSenderId: '205809805471',
+    projectId: 'dashchat2',
+    storageBucket: 'dashchat2.appspot.com',
+    iosClientId: '205809805471-15r7tig4npp0nfvmmgqnti0tg6tqpmlm.apps.googleusercontent.com',
     iosBundleId: 'com.example.dash',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAxz7ZysYrC1D1a52PUb45FB3c-ojCXDTU',
-    appId: '1:147576229933:ios:65ada70d95776fd109e8a4',
-    messagingSenderId: '147576229933',
-    projectId: 'fir-41e12',
-    storageBucket: 'fir-41e12.appspot.com',
-    iosClientId: '147576229933-ngkllm2tsfhbh4hqj47j4edbdfusn4qh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAa-ypwICV1ZJp3RCiN5kP3Q-HxCN8QpX0',
+    appId: '1:205809805471:ios:16028dde9bd3492cfa1aaa',
+    messagingSenderId: '205809805471',
+    projectId: 'dashchat2',
+    storageBucket: 'dashchat2.appspot.com',
+    iosClientId: '205809805471-5v6hamvlln4g1empu907c5n2t42qd6nj.apps.googleusercontent.com',
     iosBundleId: 'com.example.dash.RunnerTests',
   );
 }
