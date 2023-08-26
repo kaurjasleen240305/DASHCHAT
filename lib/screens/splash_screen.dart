@@ -1,6 +1,9 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:animated_background/particles.dart';
+import 'package:dash/assets/utils/colors.dart';
+import 'package:dash/screens/home_screen.dart';
 import 'package:dash/screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dash/screens/login_screen.dart';
 import 'dart:async';
@@ -29,7 +32,27 @@ class _Splash_screen_createdState extends State <Splash_screen_created> {
     super.initState();
     Timer(Duration(seconds:10),()=>
        Navigator.pushReplacement(context,MaterialPageRoute(
-        builder:(context)=>LoginScreen()
+        builder:(context)=>StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder:(context,snapshot){
+            if(snapshot.connectionState==ConnectionState.active){
+                if(snapshot.hasData){
+                  return Home_Screen();
+                }
+                else{
+                  return Text('${snapshot.error}');
+                }
+            }
+            else if(snapshot.connectionState==ConnectionState.waiting){
+               return const Center(
+                child:CircularProgressIndicator(
+                  color:primaryColor
+                )
+               );
+            }
+            return LoginScreen();
+          },
+        ),
        ))
     );
   }

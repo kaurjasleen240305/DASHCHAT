@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 import 'package:dash/assets/utils/utils.dart';
+import 'package:dash/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dash/shared/text_input.dart';
-import 'package:dash/assets/colors.dart';
+import 'package:dash/assets/utils/colors.dart';
 import 'package:dash/resource/auth.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,6 +21,7 @@ class _Sign_up_screenState extends State<Sign_up_screen> {
   final TextEditingController _bioController=TextEditingController();
   final TextEditingController _usernameController=TextEditingController();
   Uint8List? _image;
+  bool loading=false;
 
   @override 
   void dispose(){
@@ -36,6 +38,8 @@ class _Sign_up_screenState extends State<Sign_up_screen> {
         _image=im;
       });
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,13 +101,20 @@ class _Sign_up_screenState extends State<Sign_up_screen> {
             //button login
             InkWell(
               onTap: ()async{
+                setState(() {
+                  loading=true;
+                });
               String res=await Authentication().sign_up(email: _emailController.text, password: _passController.text, username: _usernameController.text, bio: _bioController.text,file:_image!);
               print(res);
-              print('\n');
-              print('\n');
+              print('/n');
+              print('/n');
+              setState(() {
+                loading=false;
+              });
               },
              child:Container(
-              child:const Text('Register',style: TextStyle(color:Colors.white,fontSize:18),),
+              child:
+              loading? const Center(child:CircularProgressIndicator(color:primaryColor),) :const Text('Register',style: TextStyle(color:Colors.white,fontSize:18),),
               width:double.infinity,
               alignment:Alignment.center,
               padding:const EdgeInsets.symmetric(vertical:18),
@@ -119,6 +130,23 @@ class _Sign_up_screenState extends State<Sign_up_screen> {
             Flexible(child: Container(
               height:15,
             )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding:const EdgeInsets.symmetric(vertical:8,horizontal: 8),
+                  child:Text('Already have an account?',style:TextStyle(color:blueColor)),
+                ),
+                GestureDetector(
+                  onTap:()=>Navigator.push(context, MaterialPageRoute(builder:(context)=>const LoginScreen() )),
+                  child:Container(
+                    padding:EdgeInsets.symmetric(vertical:8,horizontal:6),
+                    child:const Text('Login',style:TextStyle(fontWeight:FontWeight.bold,color:blueColor)),
+                  )
+                ),
+                
+              ],
+            )
             
           ],),
          

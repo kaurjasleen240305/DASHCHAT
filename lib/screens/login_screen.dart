@@ -1,7 +1,10 @@
-import 'package:dash/assets/colors.dart';
+import 'package:dash/assets/utils/colors.dart';
+import 'package:dash/screens/home_screen.dart';
+import 'package:dash/screens/sign_up_screen.dart';
 import 'package:dash/shared/text_input.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dash/resource/auth.dart';
+import 'dart:typed_data';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,16 +13,39 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController email_controller=TextEditingController();
   final TextEditingController pass_controller=TextEditingController();
+  bool loading=false;
+  bool error=false;
+  String? res;
   @override
   void dispose(){
     super.dispose();
     email_controller.dispose();
     pass_controller.dispose();
   }
+
+  void loginUser() async{
+    setState(() {
+      loading=true;
+      error=false;
+    });
+    res=await Authentication().login(email: email_controller.text,password:pass_controller.text );
+    if(res=="Success"){
+       
+    }
+    else {
+      error=true;
+      if(res=='user-not-found'){
+        res="NO SUCH USER EXISTS PLEASE REGISTER ";
+      }
+    }
+    setState(() {
+      loading=false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Flexible(child:Container(
               height:150,
             )),
+            Image.asset('lib/assets/images/Dash_logo.png',height:200,width:200,scale:3.5),
             Container(
             child:Text('DashChat',style: TextStyle(color:Colors.white,fontFamily:'Vegan' ,fontWeight: FontWeight.bold,fontSize:30),),),
             const SizedBox(
@@ -50,8 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 30,
             ),
             //button login
-            Container(
-              child:const Text('Log In',style: TextStyle(color:Colors.white,fontSize:18),),
+            InkWell(
+              onTap:loginUser,
+            child:Container(
+              child:!loading? const Text('Log In',style: TextStyle(color:Colors.white,fontSize:18),):const CircularProgressIndicator(color:primaryColor),
               width:double.infinity,
               alignment:Alignment.center,
               padding:const EdgeInsets.symmetric(vertical:18),
@@ -61,12 +90,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                  color: blueColor,
                ),
-            ),
+            ),),
             //to signup
             SizedBox(height:15,),
             Flexible(child: Container(
               height:15,
             )),
+            error? Container(
+              width:400,
+              height:50,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)),border: Border.all(color:Colors.redAccent),color: Colors.redAccent),
+              child:Center(child:Text('$res',style:TextStyle(color:primaryColor,fontSize:15)))):Text(" "),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -76,16 +110,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             GestureDetector
             (
-              onTap:(){} ,
+              onTap:(){
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>Sign_up_screen()));
+              } ,
               child: Container(
-         //     width:400,
-              child:Text('Sign Up',style:TextStyle(color:blueColor)),
               padding:const EdgeInsets.symmetric(vertical:8,),
+              child:Text('Sign Up',style:TextStyle(color:blueColor,)),
               ),),
             ],)
           ],),
-         
-
           ),
         ),
         
