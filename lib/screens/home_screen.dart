@@ -1,6 +1,7 @@
 import 'package:dash/assets/utils/colors.dart';
 import 'package:dash/screens/add_post_screen.dart';
 import 'package:dash/screens/all_posts_screen.dart';
+import 'package:dash/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash/providers/user.dart';
@@ -17,6 +18,7 @@ class Home_Screen extends StatefulWidget {
 
 class _Home_ScreenState extends State<Home_Screen> {
    String username="";
+   String uid="";
    int open=0;
    late PageController pageController;
    
@@ -37,6 +39,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     DocumentSnapshot snap=await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     setState(() {
       username=(snap.data() as Map<String,dynamic>)['username'];
+      uid=(snap.data() as Map<String,dynamic>)['uid'];
     });
 
    }
@@ -64,7 +67,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             Text('search'),
             Add_post_screen(),
             Text('notif'),
-            Text('profile'),
+            Profile_Screen(uid:uid),
         ],
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,

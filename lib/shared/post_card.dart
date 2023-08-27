@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dash/screens/comments_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dash/shared/like_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
  bool isLikeAnimating=false;
  late String userid;
+ int comments=0;
 // final Widget.widget.snap=super.Widget.widget.snap;
   
 
@@ -30,6 +32,15 @@ class _PostCardState extends State<PostCard> {
   void initState() {
     super.initState();
     getUserId();
+    getComments();
+  }
+
+  void getComments() async{
+     QuerySnapshot sn= await FirebaseFirestore.instance.collection('posts').doc(widget.snap['postId']).collection('comments').get();
+     comments=sn.docs.length;
+     setState(() {
+       
+     });
   }
 
   void getUserId() async{
@@ -113,7 +124,11 @@ class _PostCardState extends State<PostCard> {
              const Icon(Icons.favorite ,color:Colors.red):const Icon(
               Icons.favorite_border,),
              ),),
-             IconButton(onPressed: (){}, icon:Icon(Icons.comment_outlined) ,color:primaryColor),
+             IconButton(onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(builder:(context)=>CommentScreen(
+               snap: widget.snap,
+              ) ));
+             }, icon:Icon(Icons.comment_outlined) ,color:primaryColor),
               IconButton(onPressed: (){}, icon:Icon(Icons.send) ,color:primaryColor),
               Expanded(child:Align(
                 alignment:Alignment.bottomRight,
@@ -151,7 +166,7 @@ class _PostCardState extends State<PostCard> {
             onTap: (){},
             child:Container(
               padding: const EdgeInsets.symmetric(vertical:6),
-              child:Text('View all 200 comments',style:TextStyle(
+              child:Text('View all $comments comments',style:TextStyle(
                 color:secondaryColor,
                 fontSize: 16,
               ))
