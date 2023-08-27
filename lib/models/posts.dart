@@ -8,7 +8,6 @@ class Post{
   final String postId;
   final DateTime date_pub;
   final String postUrl;
-  final String profImage;
 
   const Post({
     required this.description,
@@ -18,7 +17,7 @@ class Post{
     required this.postId,
     required this.date_pub,
     required this.postUrl,
-    required this.profImage,
+
   }) ;
 
   static Post fromSnap(DocumentSnapshot snap){
@@ -30,7 +29,7 @@ class Post{
         likes:snapshot['likes'] ,
         date_pub:snapshot['date_pub'] ,
         postUrl: snapshot['postUrl'],
-        profImage:snapshot['profImage'] ,
+     //   profImage:snapshot['profImage'] ,
         postId: snapshot['postId'],
       );
   }
@@ -43,7 +42,7 @@ class Post{
     "postId":postId,
     "date_pub":date_pub,
     "postUrl":postUrl,
-    "profImage":profImage,
+    //"profImage":profImage,
   };
 
 }

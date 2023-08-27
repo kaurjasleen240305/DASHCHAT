@@ -1,11 +1,16 @@
 import 'package:dash/assets/utils/colors.dart';
 import 'package:dash/assets/utils/utils.dart';
+import 'dart:typed_data';
 import 'package:dash/providers/user.dart';
 import 'package:dash/resource/firestore_methods.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:buffer/buffer.dart';
 
 class Add_post_screen extends StatefulWidget {
   const Add_post_screen({super.key});
@@ -15,11 +20,33 @@ class Add_post_screen extends StatefulWidget {
 }
 
 class Add_post_screenState extends State<Add_post_screen> {
+  String username="";
+  String uid="";
+ // var cx=rootBundle.load('lib/assets/images/Dash_logo.png');
   Uint8List? _file;
   bool isLoading=false;
   final TextEditingController _desc_controller=TextEditingController();
 
+
+  @override 
+   void initState(){
+    super.initState();
+    getUsername();
+   }
+  
+  void getUsername() async{
+    DocumentSnapshot snap=await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    setState(() {
+      username=(snap.data()as Map<String,dynamic>)['username'];
+      uid=(snap.data()as Map<String,dynamic>)['uid'];
+    });
+   }
    void _selectImage(BuildContext parentContext) async{
+   //      final AssetBundle rootBundle = ;
+      //    ByteBuffer get buffer => _typedBuffer.buffer;
+         ByteData x=await rootBundle.load('lib/assets/images/Dash_logo.png');
+        // print(x);
+        
           return showDialog(
             context: parentContext, 
             builder: (BuildContext context){
@@ -33,7 +60,7 @@ class Add_post_screenState extends State<Add_post_screen> {
                       Navigator.pop(context);
                       Uint8List file=await pickImage(ImageSource.camera);
                       setState(() {
-                        _file=file;
+                         _file=x.buffer.asUint8List();
                       });
                     },
                   ),
@@ -44,7 +71,7 @@ class Add_post_screenState extends State<Add_post_screen> {
                   Navigator.of(context).pop();
                   Uint8List file = await pickImage(ImageSource.gallery);
                   setState(() {
-                    _file = file;
+                     _file=x.buffer.asUint8List();
                   });
                 }),
                 SimpleDialogOption(
@@ -53,6 +80,17 @@ class Add_post_screenState extends State<Add_post_screen> {
               onPressed: () {
                 Navigator.pop(context);
               },
+            ),
+               SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text("MY OWN"),
+             onPressed: () async {
+                  Navigator.of(context).pop();
+                  Uint8List file = await x.buffer.asUint8List();
+                  setState(() {
+                     _file=file;
+                  });
+                }
             )
                 ]
               );
@@ -62,33 +100,43 @@ class Add_post_screenState extends State<Add_post_screen> {
    }
    
 
-   void postImage(String uid,String username,String profImage) async{
+   void postImage(String uid,String username) async{
+   //   _file=await rootBundle.load('lib/assets/')
+      print('Hi');
       setState(() {
         isLoading=true;
       });
       try{
+        if(_file=='null'){
+          print("NUllllllllllllllllll");
+        }
+        else{
+          print("Not Nulllllllllllllll");
+        }
         String res=await FireStoreMethods().uploadPost(
-          _desc_controller.text, _file!, uid, username, profImage);
+          _desc_controller.text, _file!, uid, username);
           if(res=="Success"){
+            print("SUCCESS SUCCESS SUCCESS");
             setState(() {
               isLoading=false;
             });
           }
           else{
-            print(res);
+            print("ERROR");
           }
       }
       catch(err){
         setState(() {
           isLoading=false;
         });
-        print(err.toString());
+        print("ERROR");
       }
    }
 
    void clearImage(){
-    setState(() {
-      _file=null;
+    setState(() async{
+      ByteData x=await rootBundle.load('lib/assets/images/Dash_logo.png');
+       _file=x.buffer.asUint8List();
     });
    }
 
@@ -102,7 +150,6 @@ class Add_post_screenState extends State<Add_post_screen> {
   @override
   Widget build(BuildContext context) {
       final UserProvider userProvider=Provider.of<UserProvider>(context);
-
       return _file==null?Center(child: IconButton(icon: const Icon(Icons.upload),onPressed: ()=>_selectImage(context),)):
       Scaffold(
          appBar: AppBar(
@@ -113,15 +160,15 @@ class Add_post_screenState extends State<Add_post_screen> {
           centerTitle: false,
           actions: <Widget>[
                 TextButton(
-                  onPressed: () => postImage(
-                    userProvider.getUser.uid,
-                    userProvider.getUser.username,
-                    userProvider.getUser.profile_pic,
+                  onPressed: () => {print(username),postImage(
+                    uid,
+                   username,
                   ),
+                  },
                   child: const Text(
                     "Post",
                     style: TextStyle(
-                        color: Colors.blueAccent,
+                        color: blueColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0),
                   ),
@@ -130,7 +177,7 @@ class Add_post_screenState extends State<Add_post_screen> {
          ),
 
          body:Column(children: <Widget>[
-          isLoading? const LinearProgressIndicator()
+          isLoading? const LinearProgressIndicator(color: primaryColor,)
           :const Padding(padding: EdgeInsets.only(top:0.0)),
           const Divider(),
           Row(
@@ -140,7 +187,7 @@ class Add_post_screenState extends State<Add_post_screen> {
               CircleAvatar(
                 backgroundColor: Colors.amber,),
               SizedBox(
-                width:400,
+                width:200,
                 child:TextField(
                   controller: _desc_controller,
                   decoration: const InputDecoration(
@@ -151,8 +198,8 @@ class Add_post_screenState extends State<Add_post_screen> {
                   )
               ),
               SizedBox(
-                      height: 45.0,
-                      width: 45.0,
+                      height: 25.0,
+                      width: 25.0,
                       child: AspectRatio(
                         aspectRatio: 487 / 451,
                         child: Container(

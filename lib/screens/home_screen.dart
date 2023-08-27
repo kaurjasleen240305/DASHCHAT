@@ -1,5 +1,6 @@
 import 'package:dash/assets/utils/colors.dart';
 import 'package:dash/screens/add_post_screen.dart';
+import 'package:dash/screens/all_posts_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash/providers/user.dart';
@@ -56,12 +57,10 @@ class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar (
-        title:Text("$username"),
-      ),
+     
       body:PageView(
         children: [
-             Text('feed'),
+             All_Post_Screen(),
             Text('search'),
             Add_post_screen(),
             Text('notif'),
