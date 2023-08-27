@@ -18,8 +18,10 @@ samples, guidance on mobile development, and a full API reference.
 
 ##DEPENDENCIES USED:-
 
- cupertino_icons: ^1.0.2
- 
+
+
+cupertino_icons: ^1.0.2
+
   firebase_core: ^2.15.1
   
   animated_background: ^2.0.0
@@ -37,5 +39,12 @@ samples, guidance on mobile development, and a full API reference.
   provider: ^6.0.5
   
   uuid: ^3.0.7
+  
+  buffer: ^1.2.0
+  
+  flutter_svg: ^2.0.7
+  
+  intl: ^0.18.1
+ 
   
 
